@@ -1,0 +1,12 @@
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.controls__input {
+  max-width: 377px;
+}
+
+.controls__button {
+  width: 140px;
+}

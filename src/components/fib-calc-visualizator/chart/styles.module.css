@@ -1,15 +1,15 @@
-.fibCalc {
+.chart {
   display: flex;
   flex-wrap: wrap;
   max-width: 944px;
   width: max-content;
 }
 
-.fibCalc__element {
+.chart__element {
   margin-top: 78px;
 }
 
-.fibCalc__element:nth-child(10),
-.fibCalc__element:last-child {
+.chart__element:nth-child(10),
+.chart__element:last-child {
   margin-right: 0;
 }

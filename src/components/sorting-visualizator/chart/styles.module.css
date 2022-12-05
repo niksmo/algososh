@@ -1,0 +1,10 @@
+.sortingChart {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 340px;
+}
+
+.sortingChart__scale:last-child {
+  margin-right: 0;
+}

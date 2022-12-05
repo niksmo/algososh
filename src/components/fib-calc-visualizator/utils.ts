@@ -1,16 +1,17 @@
 import { SHORT_DELAY_IN_MS } from 'constants/delays';
-import { nanoid } from 'nanoid';
-
-export interface IRenderElement {
-  id: string;
-  value: number;
-}
+import { ArrayItem } from 'helpers/entities';
+import { TArrayItem } from 'types';
 
 export const startAction = () => ({
   type: 'start' as const,
 });
 
-export const updateAction = (payload: IRenderElement[]) => ({
+export const changeValueAction = (payload: string) => ({
+  type: 'changeValue' as const,
+  payload,
+});
+
+export const updateAction = (payload: TArrayItem[]) => ({
   type: 'update' as const,
   payload,
 });
@@ -19,42 +20,42 @@ export const stopAction = () => ({
   type: 'stop' as const,
 });
 
-type TFibCalcActions =
+type TFibCalcActionTypes =
   | ReturnType<typeof startAction>
   | ReturnType<typeof updateAction>
-  | ReturnType<typeof stopAction>;
+  | ReturnType<typeof stopAction>
+  | ReturnType<typeof changeValueAction>;
 
 interface IFibCalcState {
   isWorking: boolean;
-  renderElements: IRenderElement[];
+  value: string;
+  array: TArrayItem[];
 }
+
+export const fibCalcInitState: IFibCalcState = {
+  isWorking: false,
+  value: '',
+  array: [],
+};
 
 export const fibCalcReducer = (
   prevState: IFibCalcState,
-  action: TFibCalcActions
+  action: TFibCalcActionTypes
 ): IFibCalcState => {
   switch (action.type) {
+    case 'changeValue':
+      return { ...prevState, value: action.payload };
     case 'start':
       return { ...prevState, isWorking: true };
     case 'update':
-      return { ...prevState, renderElements: action.payload };
+      return { ...prevState, array: action.payload };
     case 'stop':
       return { ...prevState, isWorking: false };
   }
 };
 
-class ArrayItem implements IRenderElement {
-  value: number;
-  id: string;
-
-  constructor(value: number) {
-    this.value = value;
-    this.id = nanoid();
-  }
-}
-
-export async function* getFibonacciNumbers(num: number) {
-  let ans: IRenderElement[] = [];
+export async function* getFibNumbersSequence(num: number) {
+  let ans: TArrayItem[] = [];
 
   let a = 0;
   let b = 1;

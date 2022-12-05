@@ -1,4 +1,4 @@
-.stringReverser {
+.reverseChart {
   display: grid;
   grid-auto-flow: column;
   column-gap: calc(var(--offset-base-size) * 8);
