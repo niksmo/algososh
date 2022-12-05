@@ -39,7 +39,8 @@ export const StringComponent: React.FC = () => {
       {reverseString && (
         <StringReverser
           string={reverseString}
-          toggleReversingState={toggleReversingState}
+          startCb={() => toggleReversingState(true)}
+          finishCb={() => toggleReversingState(false)}
           extClassName={styles.stringComponent__stringReverser}
         />
       )}

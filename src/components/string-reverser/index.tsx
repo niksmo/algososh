@@ -12,14 +12,16 @@ import styles from './styles.module.css';
 
 interface IStringReverserProps {
   string: string;
-  toggleReversingState: React.Dispatch<React.SetStateAction<boolean>>;
+  startCb: () => void;
+  finishCb: () => void;
   extClassName?: string;
 }
 
 export const StringReverser: React.FC<IStringReverserProps> = ({
   string,
   extClassName,
-  toggleReversingState,
+  startCb,
+  finishCb,
 }) => {
   const [{ isWorking, renderElements }, dispatch] = useReducer(reverserReducer, {
     isWorking: false,
@@ -27,19 +29,19 @@ export const StringReverser: React.FC<IStringReverserProps> = ({
   });
 
   const reverseString = async () => {
-    toggleReversingState(true);
-
     const reverseGenerator = generateReverseSequence(renderElements);
     for await (let renderElements of reverseGenerator) {
       dispatch(updateAction(renderElements));
     }
 
     dispatch(stopAction());
-    toggleReversingState(false);
+    finishCb();
   };
 
   useEffect(() => {
     dispatch(startAction(string));
+    startCb();
+    // eslint-disable-next-line
   }, [string]);
 
   useEffect(() => {
