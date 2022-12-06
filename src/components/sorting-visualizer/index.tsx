@@ -14,11 +14,11 @@ import {
   updateArrayAction,
 } from './utils';
 
-interface ISortingVisualizatorProps {
+interface ISortingVisualizerProps {
   extClassName?: string;
 }
 
-export const SortingVisualizator = ({ extClassName }: ISortingVisualizatorProps) => {
+export const SortingVisualizer = ({ extClassName }: ISortingVisualizerProps) => {
   const [{ isWorking, method, sortType, array }, dispatch] = useReducer(
     sortingReducer,
     initSortingState

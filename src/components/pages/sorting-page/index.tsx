@@ -1,9 +1,9 @@
 import React from 'react';
 import { SolutionLayout } from 'components/ui/solution-layout';
-import { SortingVisualizator } from 'components/sorting-visualizator';
+import { SortingVisualizer } from 'components/sorting-visualizer';
 
 export const SortingPage = () => (
   <SolutionLayout title="Сортировка массива">
-    <SortingVisualizator />
+    <SortingVisualizer />
   </SolutionLayout>
 );

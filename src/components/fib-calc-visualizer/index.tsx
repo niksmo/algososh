@@ -13,11 +13,11 @@ import {
 } from './utils';
 import styles from './styles.module.css';
 
-interface IFibCalcVisualizatorProps {
+interface IFibCalcVisualizerProps {
   extClassName?: string;
 }
 
-export const FibCalcVisualizator: React.FC<IFibCalcVisualizatorProps> = ({ extClassName }) => {
+export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassName }) => {
   const [{ isWorking, value, array }, dispatch] = useReducer(fibCalcReducer, fibCalcInitState);
 
   async function calcFibNum() {
@@ -36,14 +36,14 @@ export const FibCalcVisualizator: React.FC<IFibCalcVisualizatorProps> = ({ extCl
   }, [isWorking]);
 
   return (
-    <div className={cn(styles.fibVisualizator, extClassName)}>
+    <div className={cn(styles.fibVisualizer, extClassName)}>
       <FibManager
         onSubmit={() => dispatch(startAction())}
         onChange={value => dispatch(changeValueAction(value))}
         value={value}
         isDisabled={isWorking}
       />
-      <FibChart extClassName={styles.fibVisualizator__chart} elements={array} />
+      <FibChart extClassName={styles.fibVisualizer__chart} elements={array} />
     </div>
   );
 };

@@ -13,11 +13,11 @@ import { ReverseManager } from './manager';
 import { ReverseChart } from './chart';
 import styles from './styles.module.css';
 
-interface IReverseVisualizatorProps {
+interface IReverseVisualizerProps {
   extClassName?: string;
 }
 
-export const ReverseVisualizator: React.FC<IReverseVisualizatorProps> = ({ extClassName }) => {
+export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassName }) => {
   const [{ isWorking, inputValue, array }, dispatch] = useReducer(
     reverserReducer,
     initReverserState
@@ -40,14 +40,14 @@ export const ReverseVisualizator: React.FC<IReverseVisualizatorProps> = ({ extCl
   }, [isWorking]);
 
   return (
-    <div className={cn(styles.reverseVisualizator, extClassName)}>
+    <div className={cn(styles.reverseVisualizer, extClassName)}>
       <ReverseManager
         value={inputValue}
         onChange={value => dispatch(changeValueAction(value))}
         isDisabled={isWorking}
         onSubmit={() => dispatch(startAction())}
       />
-      <ReverseChart elements={array} extClassName={styles.reverseVisualizator__chart} />
+      <ReverseChart elements={array} extClassName={styles.reverseVisualizer__chart} />
     </div>
   );
 };
