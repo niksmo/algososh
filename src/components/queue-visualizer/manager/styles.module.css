@@ -1,0 +1,8 @@
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.controls__input {
+  flex-basis: 377px;
+}

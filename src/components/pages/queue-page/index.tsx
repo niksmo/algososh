@@ -1,6 +1,11 @@
 import React from 'react';
-import { SolutionLayout } from '../../ui/solution-layout';
+import { QueueVisualizer } from 'components/queue-visualizer';
+import { SolutionLayout } from 'components/ui/solution-layout';
 
 export const QueuePage: React.FC = () => {
-  return <SolutionLayout title="Очередь"></SolutionLayout>;
+  return (
+    <SolutionLayout title="Очередь">
+      <QueueVisualizer />
+    </SolutionLayout>
+  );
 };
