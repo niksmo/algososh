@@ -4,7 +4,7 @@ import { Queue } from './model';
 import { ArrayItem } from 'helpers/entities';
 
 export const useQueue = () => {
-  const queueClass = useMemo(() => new Queue<TArrayItem<string>>(7), []);
+  const queueClass = useMemo(() => new Queue<string>(7), []);
   const queueRef = useRef(queueClass);
   const { current: queue } = queueRef;
 

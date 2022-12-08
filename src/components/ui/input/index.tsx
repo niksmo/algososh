@@ -27,6 +27,7 @@ export const Input: React.FC<InputProps> = ({
         type={type}
         maxLength={maxLength}
         max={max}
+        autoComplete="off"
         {...rest}
       />
       {isLimitText && (

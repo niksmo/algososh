@@ -32,6 +32,7 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
       onAdd();
     }}>
     <Input
+      placeholder="Введите значение"
       value={value}
       maxLength={4}
       isLimitText

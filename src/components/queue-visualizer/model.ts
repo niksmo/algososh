@@ -1,11 +1,14 @@
+import { ArrayItem } from 'helpers/entities';
+import { TArrayItem } from 'types';
+
 export type TQueue<T> = {
-  enqueue: (item: T) => void;
+  enqueue: (value: T) => void;
   dequeue: () => void;
   clear: () => void;
 };
 
 export class Queue<T> implements TQueue<T> {
-  private _container: T[] = [];
+  private _container: TArrayItem<T>[] = [];
   private _maxSize: number;
   private _length = 0;
   private _head = 0;
@@ -35,14 +38,14 @@ export class Queue<T> implements TQueue<T> {
     return this._tail;
   }
 
-  enqueue(item: T) {
+  enqueue(value: T) {
     if (this.length < this.maxSize) {
       if (this.length === 0) {
         this._tail = 0;
       } else {
         this._tail = (this._tail + 1) % this._maxSize;
       }
-      this._container[this._tail] = item;
+      this._container[this._tail] = new ArrayItem<T>(value);
       this._length++;
     } else {
       console.error('queue is full');

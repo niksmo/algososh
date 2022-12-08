@@ -4,7 +4,7 @@ import { ElementStates, TArrayItem } from 'types';
 import { Stack } from './model';
 
 export const useStack = () => {
-  const stackClass = useMemo(() => new Stack<TArrayItem<string>>(), []);
+  const stackClass = useMemo(() => new Stack<string>(), []);
   const stackRef = useRef(stackClass);
   const { current: stack } = stackRef;
 

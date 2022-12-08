@@ -1,0 +1,16 @@
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls__row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.controls__input {
+  flex-basis: 204px;
+  flex-shrink: 0;
+}

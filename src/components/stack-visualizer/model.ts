@@ -1,11 +1,14 @@
+import { ArrayItem } from 'helpers/entities';
+import { TArrayItem } from 'types';
+
 export type TStack<T> = {
-  push: (item: T) => void;
+  push: (value: T) => void;
   pop: () => void;
   clear: () => void;
 };
 
 export class Stack<T> implements TStack<T> {
-  private _container: T[] = [];
+  private _container: TArrayItem<T>[] = [];
   private _maxSize = 9;
 
   get size() {
@@ -20,9 +23,9 @@ export class Stack<T> implements TStack<T> {
     return this._container;
   }
 
-  push(item: T) {
+  push(value: T) {
     if (this.size < this.maxSize) {
-      this._container.push(item);
+      this._container.push(new ArrayItem<T>(value));
     }
   }
 

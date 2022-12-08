@@ -1,4 +1,3 @@
-import { ArrayItem } from 'helpers/entities';
 import { useEffect, useReducer } from 'react';
 import { StackChart } from './chart';
 import { StackManager } from './manager';
@@ -25,7 +24,7 @@ export const StackVisualizer = () => {
 
   const handleAdd = () => {
     if (!action) {
-      stack.push(new ArrayItem(inputValue));
+      stack.push(inputValue);
       dispatch(addAction());
     }
   };

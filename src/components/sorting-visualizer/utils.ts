@@ -1,6 +1,6 @@
 import { SHORT_DELAY_IN_MS } from 'constants/delays';
 import { ArrayItem } from 'helpers/entities';
-import { swap } from 'helpers/utils';
+import { getRandomInteger, swap } from 'helpers/utils';
 import { TArrayItem } from 'types';
 import { Direction } from 'types/direction';
 import { ElementStates } from 'types/element-states';
@@ -73,11 +73,6 @@ export const sortingReducer = (
       return prevState;
     }
   }
-};
-
-const getRandomInteger = (min: number, max: number) => {
-  const random = min + Math.random() * (max + 1 - min);
-  return Math.floor(random);
 };
 
 export const generateArray = () => {

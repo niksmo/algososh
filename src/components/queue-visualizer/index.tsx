@@ -1,7 +1,8 @@
-import { ArrayItem } from 'helpers/entities';
 import { useEffect, useReducer } from 'react';
 import { QueueChart } from './chart';
 import { QueueManager } from './manager';
+import { ElementStates } from 'types';
+import { SHORT_DELAY_IN_MS } from 'constants/delays';
 import {
   addAction,
   changeValueAction,
@@ -14,8 +15,6 @@ import {
   animateAction,
 } from './utils';
 import styles from './styles.module.css';
-import { ElementStates } from 'types';
-import { SHORT_DELAY_IN_MS } from 'constants/delays';
 
 export const QueueVisualizer = () => {
   const queue = useQueue();
@@ -27,7 +26,7 @@ export const QueueVisualizer = () => {
 
   const handleAdd = () => {
     if (!action) {
-      queue.enqueue(new ArrayItem(inputValue));
+      queue.enqueue(inputValue);
       dispatch(addAction());
     }
   };
@@ -53,6 +52,7 @@ export const QueueVisualizer = () => {
 
   useEffect(() => {
     dispatch(renderAction(queue.elements, queue.head, queue.tail, queue.length));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const QueueVisualizer = () => {
         queueLength={length}
         headIndex={head}
         tailIndex={tail}
-        extClassName={styles.stack__chart}
+        extClassName={styles.queue__chart}
       />
     </div>
   );
