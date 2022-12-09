@@ -5,13 +5,13 @@ import type { TArrayItem } from 'types';
 import styles from './styles.module.css';
 
 interface ISortingChartProps {
-  array: TArrayItem[];
+  elements: TArrayItem[];
   extClassName?: string;
 }
 
-export const SortingChart: React.FC<ISortingChartProps> = ({ array, extClassName }) => (
+export const SortingChart: React.FC<ISortingChartProps> = ({ elements, extClassName }) => (
   <div className={cn(styles.sortingChart, extClassName)}>
-    {array.map(item => (
+    {elements.map(item => (
       <Column
         key={item.id}
         elevation={item.value}

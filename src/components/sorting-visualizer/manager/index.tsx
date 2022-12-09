@@ -3,23 +3,23 @@ import cn from 'classnames';
 import { Button } from 'components/ui/button';
 import { RadioInput } from 'components/ui/radio-input';
 import { Direction } from 'types/direction';
-import styles from './styles.module.css';
 import { TSortMethod } from '../utils';
+import styles from './styles.module.css';
 
 interface ISortManagerProps {
   newArray: () => void;
   isDisabled: boolean;
   sortType: Direction;
-  defaultMethod: TSortMethod;
+  method: TSortMethod;
   onChangeMethod: (method: TSortMethod) => void;
-  onStart: (value: Direction) => void;
+  onStart: (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>;
 }
 
 export const SortManager: React.FC<ISortManagerProps> = ({
   newArray,
   isDisabled,
   sortType,
-  defaultMethod,
+  method,
   onChangeMethod,
   onStart,
 }) => {
@@ -30,7 +30,7 @@ export const SortManager: React.FC<ISortManagerProps> = ({
         name="sortType"
         value="selection"
         disabled={isDisabled}
-        checked={defaultMethod === 'selection'}
+        checked={method === 'selection'}
         onChange={evt => onChangeMethod(evt.currentTarget.value as TSortMethod)}
       />
       <RadioInput
@@ -39,25 +39,28 @@ export const SortManager: React.FC<ISortManagerProps> = ({
         value="bubble"
         extraClass="ml-10"
         disabled={isDisabled}
+        checked={method === 'bubble'}
         onChange={evt => onChangeMethod(evt.currentTarget.value as TSortMethod)}
       />
       <Button
         extraClass={cn(styles.controls__button, 'ml-25')}
         sorting={Direction.Ascending}
         text="По возрастанию"
-        name="ascending"
+        name="asc"
+        value="ascending"
         disabled={isDisabled}
         isLoader={isDisabled && sortType === Direction.Ascending}
-        onClick={evt => onStart(evt.currentTarget.name as Direction)}
+        onClick={onStart}
       />
       <Button
         extraClass={cn(styles.controls__button, 'ml-6')}
         sorting={Direction.Descending}
         text="По убыванию"
-        name="descending"
+        name="desc"
+        value="descending"
         disabled={isDisabled}
         isLoader={isDisabled && sortType === Direction.Descending}
-        onClick={evt => onStart(evt.currentTarget.name as Direction)}
+        onClick={onStart}
       />
       <Button
         extraClass={cn(styles.controls__button, 'ml-40')}

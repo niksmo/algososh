@@ -1,17 +1,17 @@
-import { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import { Direction } from 'types';
 import { SortingChart } from './chart';
 import { SortManager } from './manager';
 import {
-  generateBubbleSortSequence,
-  changeSortMethodAction,
-  endSortAction,
+  animateAction,
+  endAction,
   generateArray,
+  generateBubbleSortAnimation,
+  generateSelectionSortAnimation,
   initSortingState,
-  generateSelectionSortSequence,
+  switchMethodAction,
   setNewArrayAction,
   sortingReducer,
-  startSortAction,
-  updateArrayAction,
 } from './utils';
 
 interface ISortingVisualizerProps {
@@ -19,48 +19,44 @@ interface ISortingVisualizerProps {
 }
 
 export const SortingVisualizer = ({ extClassName }: ISortingVisualizerProps) => {
-  const [{ isWorking, method, sortType, array }, dispatch] = useReducer(
+  const [{ animation, method, sortType, renderElements }, dispatch] = useReducer(
     sortingReducer,
     initSortingState
   );
 
-  async function sortArray() {
-    let sortGenerator;
+  const handleSort = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const type = evt.currentTarget.value as Direction;
+
     if (method === 'bubble') {
-      sortGenerator = generateBubbleSortSequence(array, sortType);
-    } else {
-      sortGenerator = generateSelectionSortSequence(array, sortType);
+      const animationGenerator = generateBubbleSortAnimation(renderElements, type);
+      for await (let elements of animationGenerator) {
+        dispatch(animateAction(elements, type));
+      }
     }
-
-    for await (let array of sortGenerator) {
-      dispatch(updateArrayAction(array));
+    if (method === 'selection') {
+      const animationGenerator = generateSelectionSortAnimation(renderElements, type);
+      for await (let elements of animationGenerator) {
+        dispatch(animateAction(elements, type));
+      }
     }
-
-    dispatch(endSortAction());
-  }
+    dispatch(endAction());
+  };
 
   useEffect(() => {
     dispatch(setNewArrayAction(generateArray()));
   }, []);
 
-  useEffect(() => {
-    if (isWorking) {
-      sortArray();
-    }
-    // eslint-disable-next-line
-  }, [isWorking]);
-
   return (
     <div className={extClassName}>
       <SortManager
-        defaultMethod={method}
-        onStart={direction => dispatch(startSortAction(direction))}
-        onChangeMethod={method => dispatch(changeSortMethodAction(method))}
-        isDisabled={isWorking}
+        method={method}
+        onStart={handleSort}
+        onChangeMethod={method => dispatch(switchMethodAction(method))}
+        isDisabled={animation}
         sortType={sortType}
         newArray={() => dispatch(setNewArrayAction(generateArray()))}
       />
-      <SortingChart array={array} extClassName="mt-25" />
+      <SortingChart elements={renderElements} extClassName="mt-25" />
     </div>
   );
 };
