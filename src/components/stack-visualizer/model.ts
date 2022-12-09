@@ -5,11 +5,16 @@ export type TStack<T> = {
   push: (value: T) => void;
   pop: () => void;
   clear: () => void;
+  getArray: () => TArrayItem<T>[];
 };
 
 export class Stack<T> implements TStack<T> {
   private _container: TArrayItem<T>[] = [];
-  private _maxSize = 9;
+  private _maxSize;
+
+  constructor(maxSize: number) {
+    this._maxSize = maxSize;
+  }
 
   get size() {
     return this._container.length;
@@ -17,10 +22,6 @@ export class Stack<T> implements TStack<T> {
 
   get maxSize() {
     return this._maxSize;
-  }
-
-  get elements() {
-    return this._container;
   }
 
   push(value: T) {
@@ -35,5 +36,9 @@ export class Stack<T> implements TStack<T> {
 
   clear() {
     this._container = [];
+  }
+
+  getArray() {
+    return [...this._container];
   }
 }

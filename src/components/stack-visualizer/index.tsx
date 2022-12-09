@@ -1,73 +1,55 @@
-import { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { StackChart } from './chart';
 import { StackManager } from './manager';
 import {
-  addAction,
+  animateAction,
   changeValueAction,
-  clearAction,
-  deleteAction,
-  generateHighlightSequence,
-  setRenderAction,
+  generateStackAnimation,
+  renderAction,
   stackReducer,
   stackVisualizerState,
-  toggleAnimationAction,
   useStack,
 } from './utils';
 import styles from './styles.module.css';
 
 export const StackVisualizer = () => {
   const stack = useStack();
-  const [{ inputValue, action, animation, renderElements }, dispatch] = useReducer(
+  const [{ inputValue, animation, renderElements }, dispatch] = useReducer(
     stackReducer,
     stackVisualizerState
   );
 
-  const handleAdd = () => {
-    if (!action) {
-      stack.push(inputValue);
-      dispatch(addAction());
+  const handleAdd = async (evt: React.FormEvent) => {
+    evt.preventDefault();
+
+    if (!inputValue.trim()) {
+      dispatch(changeValueAction(''));
+      return;
     }
+
+    stack.push(inputValue.trim());
+    dispatch(changeValueAction(''));
+    const animationGenerator = generateStackAnimation(stack.getArray());
+    for await (let elements of animationGenerator) {
+      dispatch(animateAction(elements, 'add'));
+    }
+    dispatch(renderAction(stack.getArray()));
+  };
+
+  const handleDelete = async () => {
+    const animationGenerator = generateStackAnimation(renderElements);
+    for await (let elements of animationGenerator) {
+      console.log('generator');
+      dispatch(animateAction(elements, 'delete'));
+    }
+    stack.pop();
+    dispatch(renderAction(stack.getArray()));
   };
 
   const handleClear = () => {
     stack.clear();
-    dispatch(clearAction());
+    dispatch(renderAction(stack.getArray()));
   };
-
-  const handleDelete = () => {
-    if (!action) {
-      stack.pop();
-      dispatch(deleteAction());
-    }
-  };
-
-  async function renderStackContainer(arr: typeof stack.elements) {
-    dispatch(toggleAnimationAction(true));
-    const highlightSequence = generateHighlightSequence(arr);
-    for await (let arr of highlightSequence) {
-      dispatch(setRenderAction(arr));
-    }
-    if (action === 'delete') {
-      dispatch(setRenderAction(stack.elements));
-    }
-    dispatch(toggleAnimationAction(false, null));
-  }
-
-  useEffect(() => {
-    if (!animation && action) {
-      if (action === 'add') {
-        renderStackContainer(stack.elements);
-      }
-      if (action === 'delete') {
-        renderStackContainer(renderElements);
-      }
-
-      if (action === 'clear') {
-        dispatch(setRenderAction(stack.elements));
-      }
-    }
-    // eslint-disable-next-line
-  }, [stack.size, renderElements, action, animation]);
 
   return (
     <div>
@@ -75,6 +57,7 @@ export const StackVisualizer = () => {
         value={inputValue}
         stackSize={stack.size}
         stackMaxSize={stack.maxSize}
+        action={animation}
         onAdd={handleAdd}
         onChange={value => dispatch(changeValueAction(value))}
         onClear={handleClear}
