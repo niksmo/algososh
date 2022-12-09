@@ -89,7 +89,7 @@ export const queueReducer: React.Reducer<IQueueVisualizerState, TQueueActionType
     case 'animate':
       return { ...state, animation: true, renderElements: [...action.payload] };
     case 'render':
-      const emptyArray = Array.from(new Array(state.maxSize), i => new ArrayItem<string>(''));
+      const emptyArray = Array.from(new Array(state.maxSize), i => new ArrayItem(''));
 
       const renderElements = emptyArray.map((emtyItem, index) =>
         action.payload.renderElements[index] ? action.payload.renderElements[index] : emtyItem

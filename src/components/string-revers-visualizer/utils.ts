@@ -1,17 +1,9 @@
+import React from 'react';
 import { DELAY_IN_MS } from 'constants/delays';
 import { ArrayItem } from 'helpers/entities';
-import { swap } from 'helpers/utils';
-import { TArrayItem } from 'types';
+import type { TArrayItem } from 'types';
 import { ElementStates } from 'types/element-states';
-
-export const startAction = () => ({
-  type: 'start' as const,
-});
-
-export const updateAction = (payload: TArrayItem<string>[]) => ({
-  type: 'update' as const,
-  payload,
-});
+import { swap, waitWithDelay } from 'helpers/utils';
 
 export const changeValueAction = (payload: string) => ({
   type: 'changeValue' as const,
@@ -22,55 +14,62 @@ export const stopAction = () => ({
   type: 'stop' as const,
 });
 
+export const animateAction = (payload: TArrayItem<string>[]) => ({
+  type: 'animate' as const,
+  payload,
+});
+
 type TReverserActionTypes =
-  | ReturnType<typeof startAction>
-  | ReturnType<typeof updateAction>
+  | ReturnType<typeof changeValueAction>
   | ReturnType<typeof stopAction>
-  | ReturnType<typeof changeValueAction>;
+  | ReturnType<typeof animateAction>;
 
 interface IReverserState {
-  isWorking: boolean;
+  animation: boolean;
   inputValue: string;
-  array: TArrayItem<string>[];
+  renderElements: TArrayItem<string>[];
 }
 
 export const initReverserState: IReverserState = {
-  isWorking: false,
+  animation: false,
   inputValue: '',
-  array: [],
+  renderElements: [],
 };
 
-export const reverserReducer = (
-  prevState: IReverserState,
-  action: TReverserActionTypes
+export const reverserReducer: React.Reducer<IReverserState, TReverserActionTypes> = (
+  prevState,
+  action
 ): IReverserState => {
   switch (action.type) {
     case 'changeValue':
       return { ...prevState, inputValue: action.payload };
-    case 'start':
-      const array = [...prevState.inputValue].map(subStr => new ArrayItem(subStr));
-      return { ...prevState, isWorking: true, array };
-    case 'update':
-      return { ...prevState, array: action.payload };
+    case 'animate':
+      return { ...prevState, animation: true, renderElements: action.payload };
     case 'stop':
-      return { ...prevState, isWorking: false };
+      return { ...prevState, animation: false };
   }
 };
 
-export async function* generateReverseSequence(array: TArrayItem<string>[]) {
+export async function* generateReverseAnimation(string: string) {
+  const array = [];
+  const delay = waitWithDelay(DELAY_IN_MS);
+
+  for (let subStr of string) {
+    array.push(new ArrayItem(subStr));
+  }
+
   let pointStart = 0;
   let pointEnd = array.length - 1;
 
   while (pointStart <= pointEnd) {
     array[pointStart].state = ElementStates.Changing;
     array[pointEnd].state = ElementStates.Changing;
-    await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
     yield array;
+    await delay();
 
     swap(array, pointStart, pointEnd);
     array[pointStart].state = ElementStates.Modified;
     array[pointEnd].state = ElementStates.Modified;
-    await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
     yield array;
 
     pointStart++;

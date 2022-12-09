@@ -1,13 +1,12 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import cn from 'classnames';
 import {
+  animateAction,
   changeValueAction,
-  generateReverseSequence,
+  generateReverseAnimation,
   initReverserState,
   reverserReducer,
-  startAction,
   stopAction,
-  updateAction,
 } from './utils';
 import { ReverseManager } from './manager';
 import { ReverseChart } from './chart';
@@ -18,36 +17,34 @@ interface IReverseVisualizerProps {
 }
 
 export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassName }) => {
-  const [{ isWorking, inputValue, array }, dispatch] = useReducer(
+  const [{ animation, inputValue, renderElements }, dispatch] = useReducer(
     reverserReducer,
     initReverserState
   );
 
-  async function reverseString() {
-    const reverseGenerator = generateReverseSequence(array);
-    for await (let array of reverseGenerator) {
-      dispatch(updateAction(array));
+  const handleReverseString = async (evt: React.FormEvent) => {
+    evt.preventDefault();
+
+    if (!inputValue.trim()) {
+      return;
     }
 
+    const animationGenerator = generateReverseAnimation(inputValue.trim());
+    for await (let elements of animationGenerator) {
+      dispatch(animateAction(elements));
+    }
     dispatch(stopAction());
-  }
-
-  useEffect(() => {
-    if (isWorking) {
-      reverseString();
-    }
-    // eslint-disable-next-line
-  }, [isWorking]);
+  };
 
   return (
     <div className={cn(styles.reverseVisualizer, extClassName)}>
       <ReverseManager
         value={inputValue}
         onChange={value => dispatch(changeValueAction(value))}
-        isDisabled={isWorking}
-        onSubmit={() => dispatch(startAction())}
+        isDisabled={animation}
+        onSubmit={handleReverseString}
       />
-      <ReverseChart elements={array} extClassName={styles.reverseVisualizer__chart} />
+      <ReverseChart elements={renderElements} extClassName={styles.reverseVisualizer__chart} />
     </div>
   );
 };

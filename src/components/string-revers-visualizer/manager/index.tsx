@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 interface IReverseManagerProps {
   value: string;
   onChange: (value: string) => void;
-  onSubmit: () => void;
+  onSubmit: (evt: React.FormEvent<HTMLFormElement>) => void;
   isDisabled: boolean;
   extClassName?: string;
 }
@@ -19,13 +19,10 @@ export const ReverseManager: React.FC<IReverseManagerProps> = ({
   isDisabled,
   extClassName,
 }) => (
-  <form
-    className={cn(styles.controls, extClassName)}
-    onSubmit={evt => {
-      evt.preventDefault();
-      onSubmit();
-    }}>
+  <form className={cn(styles.controls, extClassName)} onSubmit={onSubmit}>
     <Input
+      spellCheck={false}
+      autoComplete="off"
       value={value}
       maxLength={11}
       isLimitText

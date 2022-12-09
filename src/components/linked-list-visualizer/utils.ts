@@ -119,7 +119,7 @@ export async function* generateAddAnimation(
     yield [...array];
     await delay();
     array[0].head = null;
-    array.unshift(new ArrayItem<string>(value, 'head', null));
+    array.unshift(new ArrayItem(value, 'head', null));
     array[0].state = ElementStates.Modified;
     yield [...array];
     await delay();
@@ -137,7 +137,7 @@ export async function* generateAddAnimation(
       array[tailIndex].head = null;
     }
     array[tailIndex].tail = null;
-    array.push(new ArrayItem<string>(value, null, 'tail'));
+    array.push(new ArrayItem(value, null, 'tail'));
     array.at(-1)!.state = ElementStates.Modified;
     yield [...array];
     await delay();
@@ -166,7 +166,7 @@ export async function* generateAddAnimation(
       await delay();
     }
     array[currentIndex].head = null;
-    array.splice(currentIndex, 0, new ArrayItem<string>(value));
+    array.splice(currentIndex, 0, new ArrayItem(value));
     for (let i = 0; i < currentIndex; i++) {
       array[i].state = ElementStates.Default;
     }
