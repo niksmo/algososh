@@ -1,18 +1,16 @@
+import React from 'react';
 import { SHORT_DELAY_IN_MS } from 'constants/delays';
 import { ArrayItem } from 'helpers/entities';
-import { TArrayItem } from 'types';
-
-export const startAction = () => ({
-  type: 'start' as const,
-});
+import { waitWithDelay } from 'helpers/utils';
+import type { TArrayItem } from 'types';
 
 export const changeValueAction = (payload: string) => ({
   type: 'changeValue' as const,
   payload,
 });
 
-export const updateAction = (payload: TArrayItem[]) => ({
-  type: 'update' as const,
+export const animateAction = (payload: TArrayItem[]) => ({
+  type: 'animate' as const,
   payload,
 });
 
@@ -21,56 +19,54 @@ export const stopAction = () => ({
 });
 
 type TFibCalcActionTypes =
-  | ReturnType<typeof startAction>
-  | ReturnType<typeof updateAction>
+  | ReturnType<typeof animateAction>
   | ReturnType<typeof stopAction>
   | ReturnType<typeof changeValueAction>;
 
 interface IFibCalcState {
-  isWorking: boolean;
-  value: string;
-  array: TArrayItem[];
+  animation: boolean;
+  inputValue: string;
+  renderElements: TArrayItem[];
 }
 
 export const fibCalcInitState: IFibCalcState = {
-  isWorking: false,
-  value: '',
-  array: [],
+  animation: false,
+  inputValue: '',
+  renderElements: [],
 };
 
-export const fibCalcReducer = (
-  prevState: IFibCalcState,
-  action: TFibCalcActionTypes
+export const fibCalcReducer: React.Reducer<IFibCalcState, TFibCalcActionTypes> = (
+  prevState,
+  action
 ): IFibCalcState => {
   switch (action.type) {
     case 'changeValue':
-      return { ...prevState, value: action.payload };
-    case 'start':
-      return { ...prevState, isWorking: true };
-    case 'update':
-      return { ...prevState, array: action.payload };
+      return { ...prevState, inputValue: action.payload };
+    case 'animate':
+      return { ...prevState, animation: true, renderElements: action.payload };
     case 'stop':
-      return { ...prevState, isWorking: false };
+      return { ...prevState, animation: false };
   }
 };
 
-export async function* getFibNumbersSequence(num: number) {
+export async function* generateFibAnimation(num: number) {
   let ans: TArrayItem[] = [];
+  const delay = waitWithDelay(SHORT_DELAY_IN_MS);
 
   let a = 0;
   let b = 1;
   let c;
 
   ans.push(new ArrayItem(1));
-  await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
   yield ans;
+  await delay();
 
   for (let i = 0; i < num; i++) {
     c = a + b;
 
     ans.push(new ArrayItem(c));
-    await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
     yield ans;
+    await delay();
 
     a = b;
     b = c;

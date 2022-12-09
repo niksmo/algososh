@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 interface IFibManagerProps {
   value: string;
   onChange: (value: string) => void;
-  onSubmit: () => void;
+  onSubmit: (evt: React.FormEvent) => void;
   isDisabled: boolean;
   extClassName?: string;
 }
@@ -19,12 +19,7 @@ export const FibManager: React.FC<IFibManagerProps> = ({
   isDisabled,
   extClassName,
 }) => (
-  <form
-    className={cn(styles.controls, extClassName)}
-    onSubmit={evt => {
-      evt.preventDefault();
-      onSubmit();
-    }}>
+  <form className={cn(styles.controls, extClassName)} onSubmit={onSubmit}>
     <Input
       placeholder="Введите число"
       value={value}

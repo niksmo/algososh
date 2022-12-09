@@ -1,15 +1,14 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import cn from 'classnames';
 import { FibChart } from './chart';
 import { FibManager } from './manager';
 import {
+  animateAction,
   changeValueAction,
   fibCalcInitState,
   fibCalcReducer,
-  getFibNumbersSequence,
-  startAction,
+  generateFibAnimation,
   stopAction,
-  updateAction,
 } from './utils';
 import styles from './styles.module.css';
 
@@ -18,32 +17,29 @@ interface IFibCalcVisualizerProps {
 }
 
 export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassName }) => {
-  const [{ isWorking, value, array }, dispatch] = useReducer(fibCalcReducer, fibCalcInitState);
+  const [{ animation, inputValue, renderElements }, dispatch] = useReducer(
+    fibCalcReducer,
+    fibCalcInitState
+  );
 
-  async function calcFibNum() {
-    const generatorCalcFibNum = getFibNumbersSequence(Number(value));
-    for await (let renderElements of generatorCalcFibNum) {
-      dispatch(updateAction(renderElements));
+  const handleCalcFibNum = async (evt: React.FormEvent) => {
+    evt.preventDefault();
+    const animationGenerator = generateFibAnimation(Number(inputValue));
+    for await (let elements of animationGenerator) {
+      dispatch(animateAction(elements));
     }
     dispatch(stopAction());
-  }
-
-  useEffect(() => {
-    if (isWorking) {
-      calcFibNum();
-    }
-    // eslint-disable-next-line
-  }, [isWorking]);
+  };
 
   return (
     <div className={cn(styles.fibVisualizer, extClassName)}>
       <FibManager
-        onSubmit={() => dispatch(startAction())}
+        onSubmit={handleCalcFibNum}
         onChange={value => dispatch(changeValueAction(value))}
-        value={value}
-        isDisabled={isWorking}
+        value={inputValue}
+        isDisabled={animation}
       />
-      <FibChart extClassName={styles.fibVisualizer__chart} elements={array} />
+      <FibChart extClassName={styles.fibVisualizer__chart} elements={renderElements} />
     </div>
   );
 };
