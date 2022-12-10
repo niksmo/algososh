@@ -6,6 +6,7 @@ export type TArrayItem<T = number> = {
   state: ElementStates;
   head?: string | null;
   tail?: string | null;
+  passed?: boolean;
 };
 
 export type TListNode<T> = {

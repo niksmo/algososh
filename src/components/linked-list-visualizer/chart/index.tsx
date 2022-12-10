@@ -47,7 +47,9 @@ export const QueueChart: React.FC<IQueueChartProps> = ({ elements, extClassName 
             index={index}
             extraClass={cn(styles.chart__element, 'ml-8 mr-8')}
           />
-          {index !== array.length - 1 && <ArrowIcon />}
+          {index !== array.length - 1 && (
+            <ArrowIcon fill={item.passed ? ElementStates.Changing : ElementStates.Default} />
+          )}
         </li>
       ))}
     </ul>

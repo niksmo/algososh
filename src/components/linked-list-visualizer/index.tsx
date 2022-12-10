@@ -102,6 +102,7 @@ export const LinkedListVisualizer = () => {
 
   useEffect(() => {
     dispatch(renderAction(linkedList.toArray()));
+    // eslint-disable-next-line
   }, []);
 
   return (

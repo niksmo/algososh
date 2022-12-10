@@ -123,7 +123,6 @@ export async function* generateAddAnimation(
     array[0].state = ElementStates.Modified;
     yield [...array];
     await delay();
-    return;
   }
 
   if (action === 'append') {
@@ -141,7 +140,6 @@ export async function* generateAddAnimation(
     array.at(-1)!.state = ElementStates.Modified;
     yield [...array];
     await delay();
-    return;
   }
 
   if (!index || index >= array.length || index < 0) {
@@ -160,6 +158,7 @@ export async function* generateAddAnimation(
         array[currentIndex].head = null;
       }
       array[currentIndex].state = ElementStates.Changing;
+      array[currentIndex].passed = true;
       currentIndex++;
       array[currentIndex].head = value;
       yield [...array];
@@ -167,13 +166,9 @@ export async function* generateAddAnimation(
     }
     array[currentIndex].head = null;
     array.splice(currentIndex, 0, new ArrayItem(value));
-    for (let i = 0; i < currentIndex; i++) {
-      array[i].state = ElementStates.Default;
-    }
     array[currentIndex].state = ElementStates.Modified;
     yield [...array];
     await delay();
-    return;
   }
 }
 
@@ -197,7 +192,6 @@ export async function* generateDeleteAnimation(
     array[0].value = '';
     yield [...array];
     await delay();
-    return;
   }
 
   if (action === 'deleteTail') {
@@ -218,12 +212,13 @@ export async function* generateDeleteAnimation(
       array[currentIndex].state = ElementStates.Changing;
       yield [...array];
       await delay();
+      array[currentIndex].passed = true;
       currentIndex++;
     }
+    array[currentIndex].state = ElementStates.Changing;
     array[currentIndex].tail = array[currentIndex].value;
     array[currentIndex].value = '';
     yield [...array];
     await delay();
-    return;
   }
 }

@@ -27,10 +27,6 @@ export class Queue<T> implements TQueue<T> {
     return this._maxSize;
   }
 
-  get elements() {
-    return this._container;
-  }
-
   get head() {
     return this._head;
   }

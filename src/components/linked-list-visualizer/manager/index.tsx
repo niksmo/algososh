@@ -55,7 +55,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         linkedList="small"
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'prepend'}
-        disabled={value == '' || listLength === maxSize || animation !== null}
+        disabled={value === '' || listLength === maxSize || animation !== null}
         onClick={onAddInHead}
       />
       <Button
@@ -63,7 +63,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         linkedList="small"
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'append'}
-        disabled={value == '' || listLength === maxSize || animation !== null}
+        disabled={value === '' || listLength === maxSize || animation !== null}
         onClick={onAddInTail}
       />
       <Button

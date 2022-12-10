@@ -52,6 +52,7 @@ export const QueueVisualizer = () => {
 
   useEffect(() => {
     dispatch(renderAction(queue.getArray()));
+    // eslint-disable-next-line
   }, []);
 
   return (

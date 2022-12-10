@@ -8,8 +8,9 @@ export class ArrayItem<T = number> implements TArrayItem<T> {
   state: ElementStates;
   head?;
   tail?;
+  passed?;
 
-  constructor(value: T, head?: string | null, tail?: string | null) {
+  constructor(value: T, head?: string | null, tail?: string | null, passed?: boolean) {
     this.id = nanoid();
     this.value = value;
     this.state = ElementStates.Default;
@@ -18,6 +19,9 @@ export class ArrayItem<T = number> implements TArrayItem<T> {
     }
     if (tail || tail === null) {
       this.tail = tail;
+    }
+    if (typeof passed === 'boolean') {
+      this.passed = passed;
     }
   }
 }

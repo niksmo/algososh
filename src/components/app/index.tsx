@@ -13,7 +13,7 @@ import {
 
 export const App = () => (
   <div className="app">
-    <BrowserRouter>
+    <BrowserRouter basename="/algososh">
       <Switch>
         <Route path="/" exact>
           <MainPage />
