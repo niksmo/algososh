@@ -5,6 +5,7 @@ export type TQueue<T> = {
   enqueue: (value: T) => void;
   dequeue: () => void;
   clear: () => void;
+  getArray: () => TArrayItem<T | string>[];
 };
 
 export class Queue<T> implements TQueue<T> {
@@ -71,5 +72,23 @@ export class Queue<T> implements TQueue<T> {
     this._head = 0;
     this._tail = 0;
     this._length = 0;
+  }
+
+  getArray() {
+    const array = Array.from(
+      new Array(this._maxSize),
+      i => new ArrayItem<T | string>('', null, null)
+    );
+
+    if (this._length > 0) {
+      this._container.forEach((item, index) => {
+        array[index].value = item.value;
+      });
+
+      array[this._head].head = 'head';
+      array[this._tail].tail = 'tail';
+    }
+
+    return array;
   }
 }

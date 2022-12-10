@@ -1,7 +1,8 @@
 import React, { useMemo, useRef } from 'react';
-import { TArrayItem } from 'types';
 import { Queue } from './model';
-import { ArrayItem } from 'helpers/entities';
+import { waitWithDelay } from 'helpers/utils';
+import { DELAY_IN_MS } from 'constants/delays';
+import { ElementStates, TArrayItem } from 'types';
 
 export const useQueue = () => {
   const queueClass = useMemo(() => new Queue<string>(7), []);
@@ -11,66 +12,41 @@ export const useQueue = () => {
   return queue;
 };
 
+export type TActionTypes = null | 'add' | 'delete' | 'clear';
+
 export const changeValueAction = (payload: string) => ({
   type: 'changeValue' as const,
   payload,
 });
 
-export const addAction = () => ({
-  type: 'add' as const,
-});
-
-export const deleteAction = () => ({
-  type: 'delete' as const,
-});
-
-export const clearAction = () => ({
-  type: 'clear' as const,
-});
-
-export const animateAction = (payload: TArrayItem<string>[]) => ({
+export const animateAction = (elements: TArrayItem<string>[], action: TActionTypes) => ({
   type: 'animate' as const,
-  payload,
+  payload: {
+    renderElements: elements,
+    animation: action,
+  },
 });
 
-export const renderAction = (
-  elements: TArrayItem<string>[],
-  headIndex: number,
-  tailIndex: number,
-  length: number
-) => ({
+export const renderAction = (payload: TArrayItem<string>[]) => ({
   type: 'render' as const,
-  payload: { renderElements: elements, head: headIndex, tail: tailIndex, length },
+  payload,
 });
 
 type TQueueActionTypes =
   | ReturnType<typeof changeValueAction>
-  | ReturnType<typeof addAction>
-  | ReturnType<typeof deleteAction>
-  | ReturnType<typeof clearAction>
   | ReturnType<typeof animateAction>
   | ReturnType<typeof renderAction>;
 
 interface IQueueVisualizerState {
   inputValue: string;
-  action: null | 'add' | 'delete' | 'clear';
-  animation: boolean;
+  animation: TActionTypes;
   renderElements: TArrayItem<string>[];
-  head: number;
-  tail: number;
-  length: number;
-  maxSize: number;
 }
 
 export const queueVisualizerState: IQueueVisualizerState = {
   inputValue: '',
-  action: null,
-  animation: false,
+  animation: null,
   renderElements: [],
-  head: 0,
-  tail: 0,
-  length: 0,
-  maxSize: 0,
 };
 
 export const queueReducer: React.Reducer<IQueueVisualizerState, TQueueActionTypes> = (
@@ -80,29 +56,25 @@ export const queueReducer: React.Reducer<IQueueVisualizerState, TQueueActionType
   switch (action.type) {
     case 'changeValue':
       return { ...state, inputValue: action.payload };
-    case 'add':
-      return { ...state, inputValue: '', action: 'add' };
-    case 'delete':
-      return { ...state, action: 'delete' };
-    case 'clear':
-      return { ...state, action: 'clear' };
     case 'animate':
-      return { ...state, animation: true, renderElements: [...action.payload] };
+      return { ...state, ...action.payload };
     case 'render':
-      const emptyArray = Array.from(new Array(state.maxSize), i => new ArrayItem(''));
-
-      const renderElements = emptyArray.map((emtyItem, index) =>
-        action.payload.renderElements[index] ? action.payload.renderElements[index] : emtyItem
-      );
-
       return {
         ...state,
-        animation: false,
-        action: null,
-        renderElements,
-        head: action.payload.head,
-        tail: action.payload.tail,
-        length: action.payload.length,
+        animation: null,
+        renderElements: action.payload,
       };
   }
 };
+
+export async function* generateQueueAnimation(array: TArrayItem<string>[], index: number) {
+  if (array.length === 0) {
+    return;
+  }
+
+  const delay = waitWithDelay(DELAY_IN_MS);
+
+  array[index].state = ElementStates.Changing;
+  yield array;
+  await delay();
+}

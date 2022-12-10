@@ -3,13 +3,15 @@ import cn from 'classnames';
 import { Input } from 'components/ui/input';
 import { Button } from 'components/ui/button';
 import styles from './styles.module.css';
+import { TActionTypes } from '../utils';
 
 interface IQueueManagerProps {
   value: string;
   queueLength: number;
   queueMaxSize: number;
+  animation: TActionTypes;
   onChange: (value: string) => void;
-  onAdd: () => void;
+  onAdd: (evt: React.FormEvent) => void;
   onDelete: () => void;
   onClear: () => void;
   extClassName?: string;
@@ -19,18 +21,14 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
   value,
   queueLength,
   queueMaxSize,
+  animation,
   onChange,
   onAdd,
   onDelete,
   onClear,
   extClassName,
 }) => (
-  <form
-    className={cn(styles.controls, extClassName)}
-    onSubmit={evt => {
-      evt.preventDefault();
-      onAdd();
-    }}>
+  <form className={cn(styles.controls, extClassName)} onSubmit={onAdd}>
     <Input
       placeholder="Введите значение"
       value={value}
@@ -44,19 +42,16 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
       type="submit"
       text="Добавить"
       extraClass="ml-6"
+      isLoader={animation === 'add'}
       disabled={!value || queueLength === queueMaxSize}
     />
     <Button
       text="Удалить"
       extraClass="ml-6"
+      isLoader={animation === 'delete'}
       disabled={queueLength === 0}
-      onClick={() => onDelete()}
+      onClick={onDelete}
     />
-    <Button
-      text="Очистить"
-      extraClass="ml-40"
-      disabled={queueLength === 0}
-      onClick={() => onClear()}
-    />
+    <Button text="Очистить" extraClass="ml-40" disabled={queueLength === 0} onClick={onClear} />
   </form>
 );
