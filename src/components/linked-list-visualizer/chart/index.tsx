@@ -5,12 +5,12 @@ import { ElementStates, TArrayItem } from 'types';
 import { ArrowIcon } from 'components/ui/icons';
 import styles from './styles.module.css';
 
-interface IQueueChartProps {
+interface ILinkedListChartProps {
   elements: TArrayItem<string>[];
   extClassName?: string;
 }
 
-export const QueueChart: React.FC<IQueueChartProps> = ({ elements, extClassName }) => {
+export const LinkedListChart: React.FC<ILinkedListChartProps> = ({ elements, extClassName }) => {
   const getHead = (headValue: string | null) => {
     if (headValue === 'head') {
       return headValue;

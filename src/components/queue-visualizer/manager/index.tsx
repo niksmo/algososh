@@ -10,7 +10,7 @@ interface IQueueManagerProps {
   queueLength: number;
   queueMaxSize: number;
   animation: TActionTypes;
-  onChange: (value: string) => void;
+  onChange: (evt: React.FormEvent<HTMLInputElement>) => void;
   onAdd: (evt: React.FormEvent) => void;
   onDelete: () => void;
   onClear: () => void;
@@ -35,7 +35,7 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
       maxLength={4}
       isLimitText
       extraClass={styles.controls__input}
-      onChange={evt => onChange(evt.currentTarget.value)}
+      onChange={onChange}
       disabled={queueLength === queueMaxSize}
     />
     <Button

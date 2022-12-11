@@ -11,8 +11,8 @@ interface ILinkedListManagerProps {
   listLength: number;
   maxSize: number;
   animation: TAnimationType;
-  onValueChange: (value: string) => void;
-  onIndexChange: (value: string) => void;
+  onValueChange: (evt: React.FormEvent<HTMLInputElement>) => void;
+  onIndexChange: (evt: React.FormEvent<HTMLInputElement>) => void;
   onAddInHead: () => void;
   onAddInTail: () => void;
   onDeleteFromHead: () => void;
@@ -47,7 +47,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         maxLength={4}
         isLimitText
         extraClass={styles.controls__input}
-        onChange={evt => onValueChange(evt.currentTarget.value)}
+        onChange={onValueChange}
         disabled={listLength === maxSize || animation !== null}
       />
       <Button
@@ -92,15 +92,21 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         min={0}
         max={listLength ? listLength - 1 : 0}
         extraClass={styles.controls__input}
-        disabled={animation !== null}
-        onChange={evt => onIndexChange(evt.currentTarget.value)}
+        disabled={animation !== null || listLength === 0}
+        onChange={onIndexChange}
       />
       <Button
         text="Добавить по индексу"
         linkedList="big"
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'addByIndex'}
-        disabled={value === '' || !index || listLength === maxSize || animation !== null}
+        disabled={
+          value === '' ||
+          !index ||
+          listLength === maxSize ||
+          animation !== null ||
+          Number(index) > listLength - 1
+        }
         onClick={onAddByIndex}
       />
       <Button
@@ -108,7 +114,9 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         linkedList="big"
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteByIndex'}
-        disabled={!index || listLength === 0 || animation !== null}
+        disabled={
+          !index || listLength === 0 || animation !== null || Number(index) > listLength - 1
+        }
         onClick={onDeleteByIndex}
       />
     </div>

@@ -25,8 +25,8 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassN
   const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const currentValue = evt.currentTarget.value;
 
-    const allowedNum = /^[1-9]$|^1\d$/;
-    if (allowedNum.test(currentValue) || currentValue === '') {
+    const allowedNum = /^[1-9]$|^1\d$|^\s*$/;
+    if (allowedNum.test(currentValue)) {
       dispatch(changeValueAction(currentValue));
     }
   };

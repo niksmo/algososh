@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { QueueChart } from './chart';
+import { LinkedListChart } from './chart';
 import { LinkedListManager } from './manager';
 import {
   changeValueAction,
@@ -20,6 +20,20 @@ export const LinkedListVisualizer = () => {
     linkedListReducer,
     linkedListVisualizerState
   );
+
+  const handleOnValueChange = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentValue = evt.currentTarget.value;
+    dispatch(changeValueAction(currentValue));
+  };
+
+  const handleOnIndexChange = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentIndex = evt.currentTarget.value;
+    const maxIndex = linkedList.length - 1;
+    const allowedIndex = new RegExp(`^[0-${maxIndex}]$|^\\s*$`);
+    if (allowedIndex.test(currentIndex)) {
+      dispatch(changeIndexAction(currentIndex));
+    }
+  };
 
   const handleAddInHead = async () => {
     if (!inputValue.trim()) {
@@ -113,8 +127,8 @@ export const LinkedListVisualizer = () => {
         listLength={linkedList.length}
         maxSize={linkedList.maxSize}
         animation={animation}
-        onValueChange={value => dispatch(changeValueAction(value))}
-        onIndexChange={index => dispatch(changeIndexAction(index))}
+        onValueChange={handleOnValueChange}
+        onIndexChange={handleOnIndexChange}
         onAddInHead={handleAddInHead}
         onAddInTail={handleAddInTail}
         onDeleteFromHead={handleDeleteFromHead}
@@ -122,7 +136,7 @@ export const LinkedListVisualizer = () => {
         onAddByIndex={handleAddByIndex}
         onDeleteByIndex={handleDeleteByIndex}
       />
-      <QueueChart elements={renderElements} extClassName={styles.linkedList__chart} />
+      <LinkedListChart elements={renderElements} extClassName={styles.linkedList__chart} />
     </div>
   );
 };

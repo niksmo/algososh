@@ -19,6 +19,11 @@ export const QueueVisualizer = () => {
     queueVisualizerState
   );
 
+  const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentValue = evt.currentTarget.value;
+    dispatch(changeValueAction(currentValue));
+  };
+
   const handleAdd = async (evt: React.FormEvent) => {
     evt.preventDefault();
 
@@ -63,7 +68,7 @@ export const QueueVisualizer = () => {
         queueMaxSize={queue.maxSize}
         animation={animation}
         onAdd={handleAdd}
-        onChange={value => dispatch(changeValueAction(value))}
+        onChange={handleOnChangeInputValue}
         onClear={handleClear}
         onDelete={handleDelete}
       />

@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 interface IReverseManagerProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (evt: React.FormEvent<HTMLInputElement>) => void;
   onSubmit: (evt: React.FormEvent<HTMLFormElement>) => void;
   isDisabled: boolean;
   extClassName?: string;
@@ -27,7 +27,7 @@ export const ReverseManager: React.FC<IReverseManagerProps> = ({
       maxLength={11}
       isLimitText
       extraClass={styles.controls__input}
-      onChange={evt => onChange(evt.currentTarget.value)}
+      onChange={onChange}
       disabled={isDisabled}
     />
     <Button

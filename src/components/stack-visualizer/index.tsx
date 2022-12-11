@@ -19,6 +19,12 @@ export const StackVisualizer = () => {
     stackVisualizerState
   );
 
+  const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentValue = evt.currentTarget.value;
+
+    dispatch(changeValueAction(currentValue));
+  };
+
   const handleAdd = async (evt: React.FormEvent) => {
     evt.preventDefault();
 
@@ -59,7 +65,7 @@ export const StackVisualizer = () => {
         stackMaxSize={stack.maxSize}
         action={animation}
         onAdd={handleAdd}
-        onChange={value => dispatch(changeValueAction(value))}
+        onChange={handleOnChangeInputValue}
         onClear={handleClear}
         onDelete={handleDelete}
       />

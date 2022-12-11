@@ -22,6 +22,11 @@ export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassN
     initReverserState
   );
 
+  const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentValue = evt.currentTarget.value;
+    dispatch(changeValueAction(currentValue));
+  };
+
   const handleReverseString = async (evt: React.FormEvent) => {
     evt.preventDefault();
 
@@ -40,7 +45,7 @@ export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassN
     <div className={cn(styles.reverseVisualizer, extClassName)}>
       <ReverseManager
         value={inputValue}
-        onChange={value => dispatch(changeValueAction(value))}
+        onChange={handleOnChangeInputValue}
         isDisabled={animation}
         onSubmit={handleReverseString}
       />
