@@ -22,6 +22,15 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassN
     fibCalcInitState
   );
 
+  const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
+    const currentValue = evt.currentTarget.value;
+
+    const allowedNum = /^[1-9]$|^1\d$/;
+    if (allowedNum.test(currentValue) || currentValue === '') {
+      dispatch(changeValueAction(currentValue));
+    }
+  };
+
   const handleCalcFibNum = async (evt: React.FormEvent) => {
     evt.preventDefault();
     const animationGenerator = generateFibAnimation(Number(inputValue));
@@ -35,7 +44,7 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassN
     <div className={cn(styles.fibVisualizer, extClassName)}>
       <FibManager
         onSubmit={handleCalcFibNum}
-        onChange={value => dispatch(changeValueAction(value))}
+        onChange={handleOnChange}
         value={inputValue}
         isDisabled={animation}
       />

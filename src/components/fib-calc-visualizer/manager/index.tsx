@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 interface IFibManagerProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (evt: React.FormEvent<HTMLInputElement>) => void;
   onSubmit: (evt: React.FormEvent) => void;
   isDisabled: boolean;
   extClassName?: string;
@@ -29,7 +29,7 @@ export const FibManager: React.FC<IFibManagerProps> = ({
       type="number"
       isLimitText
       extraClass={styles.controls__input}
-      onChange={evt => onChange(evt.currentTarget.value)}
+      onChange={onChange}
       disabled={isDisabled}
     />
     <Button
@@ -37,6 +37,7 @@ export const FibManager: React.FC<IFibManagerProps> = ({
       text="Рассчитать"
       extraClass={cn('ml-6', styles.controls__button)}
       isLoader={isDisabled}
+      disabled={value === '' || Number(value) < 1 || Number(value) > 19}
     />
   </form>
 );
