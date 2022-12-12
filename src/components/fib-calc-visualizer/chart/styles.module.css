@@ -1,0 +1,15 @@
+.chart {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 944px;
+  width: max-content;
+}
+
+.chart__element {
+  margin-top: 78px;
+}
+
+.chart__element:nth-child(10),
+.chart__element:last-child {
+  margin-right: 0;
+}
