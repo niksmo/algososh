@@ -50,9 +50,9 @@ export const reverserReducer: React.Reducer<IReverserState, TReverserActionTypes
   }
 };
 
-export async function* generateReverseAnimation(string: string) {
+export async function* generateReverseAnimation(string: string, latency = DELAY_IN_MS) {
   const array = [];
-  const delay = waitWithDelay(DELAY_IN_MS);
+  const delay = waitWithDelay(latency);
 
   for (let subStr of string) {
     array.push(new ArrayItem(subStr));
