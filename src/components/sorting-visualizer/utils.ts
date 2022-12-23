@@ -69,12 +69,16 @@ export const sortingReducer: React.Reducer<ISortingState, TSortActionTypes> = (
 export const generateArray = () =>
   Array.from(new Array(getRandomInteger(3, 17)), () => new ArrayItem(getRandomInteger(0, 100)));
 
-export async function* generateBubbleSortAnimation(array: TArrayItem[], sortType: Direction) {
+export async function* generateBubbleSortAnimation(
+  array: TArrayItem[],
+  sortType: Direction,
+  latency = SHORT_DELAY_IN_MS
+) {
   if (array.length === 0) {
-    return;
+    return array;
   }
 
-  const delay = waitWithDelay(SHORT_DELAY_IN_MS);
+  const delay = waitWithDelay(latency);
 
   for (let i = 0; i < array.length; i++) {
     array[i].state = ElementStates.Changing;
@@ -104,12 +108,16 @@ export async function* generateBubbleSortAnimation(array: TArrayItem[], sortType
   }
 }
 
-export async function* generateSelectionSortAnimation(array: TArrayItem[], sortType: Direction) {
+export async function* generateSelectionSortAnimation(
+  array: TArrayItem[],
+  sortType: Direction,
+  latency = SHORT_DELAY_IN_MS
+) {
   if (array.length === 0) {
-    return;
+    return array;
   }
 
-  const delay = waitWithDelay(SHORT_DELAY_IN_MS);
+  const delay = waitWithDelay(latency);
   let minIndex;
 
   for (let i = 0; i < array.length; i++) {
