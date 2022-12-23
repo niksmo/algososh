@@ -1,5 +1,7 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import cn from 'classnames';
+import { withMessage } from 'helpers/utils';
+import { DELAY_IN_MS } from 'constants/delays';
 import {
   animateAction,
   changeValueAction,
@@ -22,6 +24,13 @@ export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassN
     initReverserState
   );
 
+  const abortControllerRef = useRef<null | AbortController>(null);
+
+  const abortAnimation = () => {
+    dispatch(stopAction());
+    abortControllerRef.current?.abort();
+  };
+
   const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
     const currentValue = evt.currentTarget.value;
     dispatch(changeValueAction(currentValue));
@@ -34,12 +43,28 @@ export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({ extClassN
       return;
     }
 
-    const animationGenerator = generateReverseAnimation(inputValue.trim());
-    for await (let elements of animationGenerator) {
-      dispatch(animateAction(elements));
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
+    const animationGenerator = generateReverseAnimation(
+      inputValue.trim(),
+      DELAY_IN_MS,
+      abortController
+    );
+
+    try {
+      for await (let elements of animationGenerator) {
+        dispatch(animateAction(elements));
+      }
+      dispatch(stopAction());
+    } catch (error) {
+      if (withMessage(error)) {
+        console.log(error.message);
+      }
     }
-    dispatch(stopAction());
   };
+
+  useEffect(() => () => void abortAnimation(), []);
 
   return (
     <div className={cn(styles.reverseVisualizer, extClassName)}>
