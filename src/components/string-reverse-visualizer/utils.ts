@@ -72,7 +72,7 @@ export async function* generateReverseAnimation(
     try {
       await delay();
     } catch (error) {
-      throw new Error('abort animation');
+      throw new Error('animation aborted');
     }
 
     swap(array, pointStart, pointEnd);
