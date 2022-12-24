@@ -72,83 +72,92 @@ export const generateArray = () =>
 export async function* generateBubbleSortAnimation(
   array: TArrayItem[],
   sortType: Direction,
-  latency = SHORT_DELAY_IN_MS
+  latency = SHORT_DELAY_IN_MS,
+  abortController?: AbortController
 ) {
   if (array.length === 0) {
     return array;
   }
 
-  const delay = waitWithDelay(latency);
-
-  for (let i = 0; i < array.length; i++) {
-    array[i].state = ElementStates.Changing;
-    yield array;
-    await delay();
-    for (let j = i + 1; j < array.length; j++) {
-      array[j].state = ElementStates.Changing;
+  const delay = waitWithDelay(latency, abortController);
+  try {
+    for (let i = 0; i < array.length; i++) {
+      array[i].state = ElementStates.Changing;
       yield array;
       await delay();
+      for (let j = i + 1; j < array.length; j++) {
+        array[j].state = ElementStates.Changing;
+        yield array;
+        await delay();
 
-      const sortConditions =
-        sortType === Direction.Ascending
-          ? array[j].value < array[i].value
-          : array[j].value > array[i].value;
+        const sortConditions =
+          sortType === Direction.Ascending
+            ? array[j].value < array[i].value
+            : array[j].value > array[i].value;
 
-      if (sortConditions) {
-        swap(array, i, j);
+        if (sortConditions) {
+          swap(array, i, j);
+        }
+
+        array[j].state = ElementStates.Default;
+        yield array;
+        await delay();
       }
-
-      array[j].state = ElementStates.Default;
+      array[i].state = ElementStates.Modified;
       yield array;
       await delay();
     }
-    array[i].state = ElementStates.Modified;
-    yield array;
-    await delay();
+  } catch {
+    throw new Error('animation aborted');
   }
 }
 
 export async function* generateSelectionSortAnimation(
   array: TArrayItem[],
   sortType: Direction,
-  latency = SHORT_DELAY_IN_MS
+  latency = SHORT_DELAY_IN_MS,
+  abortController?: AbortController
 ) {
   if (array.length === 0) {
     return array;
   }
 
-  const delay = waitWithDelay(latency);
+  const delay = waitWithDelay(latency, abortController);
   let minIndex;
 
-  for (let i = 0; i < array.length; i++) {
-    minIndex = i;
+  try {
+    for (let i = 0; i < array.length; i++) {
+      minIndex = i;
 
-    array[i].state = ElementStates.Changing;
-    yield array;
-    await delay();
-    for (let j = i + 1; j < array.length; j++) {
-      array[j].state = ElementStates.Changing;
+      array[i].state = ElementStates.Changing;
       yield array;
       await delay();
+      for (let j = i + 1; j < array.length; j++) {
+        array[j].state = ElementStates.Changing;
+        yield array;
+        await delay();
 
-      const sortConditions =
-        sortType === Direction.Ascending
-          ? array[j].value < array[minIndex].value
-          : array[j].value > array[minIndex].value;
+        const sortConditions =
+          sortType === Direction.Ascending
+            ? array[j].value < array[minIndex].value
+            : array[j].value > array[minIndex].value;
 
-      if (sortConditions) {
-        minIndex = j;
+        if (sortConditions) {
+          minIndex = j;
+        }
+
+        array[j].state = ElementStates.Default;
+        yield array;
+        await delay();
       }
+      swap(array, i, minIndex);
 
-      array[j].state = ElementStates.Default;
+      array[minIndex].state = ElementStates.Default;
+      array[i].state = ElementStates.Modified;
       yield array;
       await delay();
     }
-    swap(array, i, minIndex);
-
-    array[minIndex].state = ElementStates.Default;
-    array[i].state = ElementStates.Modified;
-    yield array;
-    await delay();
+  } catch {
+    throw new Error('animation aborted');
   }
 }
