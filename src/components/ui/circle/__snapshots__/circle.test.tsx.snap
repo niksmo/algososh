@@ -1,0 +1,280 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Circle component test should render with all existing states 1`] = `
+<div>
+  <div
+    class="content "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 absolute head element"
+    />
+    <div
+      class="circle   default"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input letter"
+      >
+        1
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 absolute index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    />
+  </div>
+  <div
+    class="content "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 absolute head element"
+    />
+    <div
+      class="circle   changing"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input letter"
+      >
+        2
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 absolute index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    />
+  </div>
+  <div
+    class="content "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 absolute head element"
+    />
+    <div
+      class="circle   modified"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input letter"
+      >
+        3
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 absolute index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    />
+  </div>
+</div>
+`;
+
+exports[`Circle component test should render with index 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  />
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  >
+    5
+  </p>
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail60 element"
+  />
+</div>
+`;
+
+exports[`Circle component test should render with isSmall prop 1`] = `
+<div
+  class="circle  small default"
+  data-testid="circle-main"
+>
+  <p
+    class="text text_type_circle text_color_input letter"
+  />
+</div>
+`;
+
+exports[`Circle component test should render with react element in head 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  >
+    <a>
+      abcd
+    </a>
+  </div>
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 element"
+  />
+</div>
+`;
+
+exports[`Circle component test should render with react element in tail 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  />
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 element"
+  >
+    <a>
+      abcd
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Circle component test should render with text 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  />
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    >
+      abcd
+    </p>
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 element"
+  />
+</div>
+`;
+
+exports[`Circle component test should render with text in head 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head string"
+  >
+    abcd
+  </div>
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 element"
+  />
+</div>
+`;
+
+exports[`Circle component test should render with text in tail 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  />
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 string"
+  >
+    abcd
+  </div>
+</div>
+`;
+
+exports[`Circle component test should render without text 1`] = `
+<div
+  class="content "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 absolute head element"
+  />
+  <div
+    class="circle   default"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input letter"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 absolute index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 absolute tail30 element"
+  />
+</div>
+`;
