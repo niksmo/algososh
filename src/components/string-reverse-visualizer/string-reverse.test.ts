@@ -3,62 +3,54 @@ import { ElementStates } from 'types';
 import { generateReverseAnimation } from './utils';
 
 describe('reverse string', () => {
-  it('should correctly reverse string with even count of substrings', async () => {
-    let reversedItems: ArrayItem<string>[] = [];
+  let array: ArrayItem<string>[] = [];
+  let reverseIterator: ReturnType<typeof generateReverseAnimation>;
+  let expectedValues: string[];
 
-    const reverseIterator = generateReverseAnimation('1234', 0);
+  it('should correctly reverse string with even count of substrings', async () => {
+    reverseIterator = generateReverseAnimation('1234', 0);
     for await (let arrayOfItems of reverseIterator) {
-      reversedItems = arrayOfItems;
+      array = arrayOfItems;
     }
 
-    const expectedValues = ['4', '3', '2', '1'];
+    expectedValues = ['4', '3', '2', '1'];
 
-    expect(reversedItems.map(item => item.value)).toEqual(expectedValues);
+    expect(array.map(item => item.value)).toEqual(expectedValues);
   });
 
   it('should correctly reverse string with odd count of substrings', async () => {
-    let reversedItems: ArrayItem<string>[] = [];
-
-    const reverseIterator = generateReverseAnimation('12345', 0);
+    reverseIterator = generateReverseAnimation('12345', 0);
     for await (let arrayOfItems of reverseIterator) {
-      reversedItems = arrayOfItems;
+      array = arrayOfItems;
     }
 
-    const expectedValues = ['5', '4', '3', '2', '1'];
+    expectedValues = ['5', '4', '3', '2', '1'];
 
-    expect(reversedItems.map(item => item.value)).toEqual(expectedValues);
+    expect(array.map(item => item.value)).toEqual(expectedValues);
   });
 
   it('should correctly reverse string with one substring', async () => {
-    let reversedItems: ArrayItem<string>[] = [];
-
-    const reverseIterator = generateReverseAnimation('1', 0);
+    reverseIterator = generateReverseAnimation('1', 0);
     for await (let arrayOfItems of reverseIterator) {
-      reversedItems = arrayOfItems;
+      array = arrayOfItems;
     }
 
-    const expectedValues = ['1'];
+    expectedValues = ['1'];
 
-    expect(reversedItems.map(item => item.value)).toEqual(expectedValues);
+    expect(array.map(item => item.value)).toEqual(expectedValues);
   });
 
   it('should correctly reverse empty string', async () => {
-    let reversedItems: ArrayItem<string>[] = [];
-
-    const reverseIterator = generateReverseAnimation('', 0);
+    reverseIterator = generateReverseAnimation('', 0);
     for await (let arrayOfItems of reverseIterator) {
-      reversedItems = arrayOfItems;
+      array = arrayOfItems;
     }
 
-    const expectedValues: number[] = [];
-
-    expect(reversedItems.map(item => item.value)).toEqual(expectedValues);
+    expect(array.map(item => item.value)).toEqual(expectedValues);
   });
 
   it('should correctly changing items state', async () => {
-    let array: ArrayItem<string>[] = [];
-
-    const reverseIterator = generateReverseAnimation('123', 0);
+    reverseIterator = generateReverseAnimation('123', 0);
 
     array = await reverseIterator.next().then(next => next.value);
     expect([array[0].state, array[2].state]).toEqual(

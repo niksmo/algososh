@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Button } from '.';
+import userEvent from '@testing-library/user-event';
 
 describe('Button component test', () => {
   it('should render with text', () => {
