@@ -19,7 +19,7 @@ export const ReverseManager: React.FC<IReverseManagerProps> = ({
   isDisabled,
   extClassName,
 }) => (
-  <form className={cn(styles.controls, extClassName)} onSubmit={onSubmit}>
+  <form className={cn(styles.controls, extClassName)} onSubmit={value ? onSubmit : undefined}>
     <Input
       spellCheck={false}
       autoComplete="off"
@@ -35,6 +35,7 @@ export const ReverseManager: React.FC<IReverseManagerProps> = ({
       text="Развернуть"
       extraClass={cn('ml-6', styles.controls__button)}
       isLoader={isDisabled}
+      disabled={value === ''}
     />
   </form>
 );

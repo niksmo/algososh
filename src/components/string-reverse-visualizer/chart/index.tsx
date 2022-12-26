@@ -10,7 +10,7 @@ interface IReverseChart {
 }
 
 export const ReverseChart: React.FC<IReverseChart> = ({ elements, extClassName }) => (
-  <div className={cn(styles.reverseChart, extClassName)}>
+  <div className={cn(styles.reverseChart, extClassName)} data-testid="reverseChart">
     {elements.map(({ value, id, state }) => (
       <Circle key={id} letter={value} state={state} />
     ))}

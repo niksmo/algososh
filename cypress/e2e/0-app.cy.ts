@@ -4,3 +4,5 @@ describe('application is available', () => {
     cy.get('main').should('exist');
   });
 });
+
+export {};

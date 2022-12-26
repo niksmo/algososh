@@ -37,3 +37,5 @@ describe('app works correctly with routes', () => {
     testRoute('list', 'связный список')
   );
 });
+
+export {};
