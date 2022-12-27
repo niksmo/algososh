@@ -8,6 +8,7 @@ exports[`Circle component test should render with all existing states 1`] = `
   >
     <div
       class="text text_type_input text_color_input mb-4 absolute head element"
+      data-testid="circle-head"
     />
     <div
       class="circle   default"
@@ -22,9 +23,11 @@ exports[`Circle component test should render with all existing states 1`] = `
     </div>
     <p
       class="text text_type_input text_color_input mt-4 absolute index"
+      data-testid="circle-index"
     />
     <div
       class="text text_type_input text_color_input mt-4 absolute tail30 element"
+      data-testid="circle-tail"
     />
   </div>
   <div
@@ -33,6 +36,7 @@ exports[`Circle component test should render with all existing states 1`] = `
   >
     <div
       class="text text_type_input text_color_input mb-4 absolute head element"
+      data-testid="circle-head"
     />
     <div
       class="circle   changing"
@@ -47,9 +51,11 @@ exports[`Circle component test should render with all existing states 1`] = `
     </div>
     <p
       class="text text_type_input text_color_input mt-4 absolute index"
+      data-testid="circle-index"
     />
     <div
       class="text text_type_input text_color_input mt-4 absolute tail30 element"
+      data-testid="circle-tail"
     />
   </div>
   <div
@@ -58,6 +64,7 @@ exports[`Circle component test should render with all existing states 1`] = `
   >
     <div
       class="text text_type_input text_color_input mb-4 absolute head element"
+      data-testid="circle-head"
     />
     <div
       class="circle   modified"
@@ -72,9 +79,11 @@ exports[`Circle component test should render with all existing states 1`] = `
     </div>
     <p
       class="text text_type_input text_color_input mt-4 absolute index"
+      data-testid="circle-index"
     />
     <div
       class="text text_type_input text_color_input mt-4 absolute tail30 element"
+      data-testid="circle-tail"
     />
   </div>
 </div>
@@ -87,6 +96,7 @@ exports[`Circle component test should render with index 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     class="circle   default"
@@ -99,11 +109,13 @@ exports[`Circle component test should render with index 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   >
     5
   </p>
   <div
     class="text text_type_input text_color_input mt-4 absolute tail60 element"
+    data-testid="circle-tail"
   />
 </div>
 `;
@@ -127,6 +139,7 @@ exports[`Circle component test should render with react element in head 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   >
     <a>
       abcd
@@ -143,9 +156,11 @@ exports[`Circle component test should render with react element in head 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="circle-tail"
   />
 </div>
 `;
@@ -157,6 +172,7 @@ exports[`Circle component test should render with react element in tail 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     class="circle   default"
@@ -169,9 +185,11 @@ exports[`Circle component test should render with react element in tail 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="circle-tail"
   >
     <a>
       abcd
@@ -187,6 +205,7 @@ exports[`Circle component test should render with text 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     class="circle   default"
@@ -201,9 +220,11 @@ exports[`Circle component test should render with text 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="circle-tail"
   />
 </div>
 `;
@@ -215,6 +236,7 @@ exports[`Circle component test should render with text in head 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head string"
+    data-testid="circle-head"
   >
     abcd
   </div>
@@ -229,9 +251,11 @@ exports[`Circle component test should render with text in head 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="circle-tail"
   />
 </div>
 `;
@@ -243,6 +267,7 @@ exports[`Circle component test should render with text in tail 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     class="circle   default"
@@ -255,9 +280,11 @@ exports[`Circle component test should render with text in tail 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 string"
+    data-testid="circle-tail"
   >
     abcd
   </div>
@@ -271,6 +298,7 @@ exports[`Circle component test should render without text 1`] = `
 >
   <div
     class="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     class="circle   default"
@@ -283,9 +311,11 @@ exports[`Circle component test should render without text 1`] = `
   </div>
   <p
     class="text text_type_input text_color_input mt-4 absolute index"
+    data-testid="circle-index"
   />
   <div
     class="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-testid="circle-tail"
   />
 </div>
 `;

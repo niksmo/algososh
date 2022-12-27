@@ -45,7 +45,6 @@ export const StackVisualizer = () => {
   const handleDelete = async () => {
     const animationGenerator = generateStackAnimation(renderElements);
     for await (let elements of animationGenerator) {
-      console.log('generator');
       dispatch(animateAction(elements, 'delete'));
     }
     stack.pop();
