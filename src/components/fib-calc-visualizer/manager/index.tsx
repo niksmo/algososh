@@ -25,7 +25,6 @@ export const FibManager: React.FC<IFibManagerProps> = ({
       value={value}
       max={19}
       min={1}
-      maxLength={1}
       type="number"
       isLimitText
       extraClass={styles.controls__input}

@@ -15,6 +15,7 @@ exports[`Circle component test should render with all existing states 1`] = `
     >
       <p
         class="text text_type_circle text_color_input letter"
+        data-testid="circle-value"
       >
         1
       </p>
@@ -39,6 +40,7 @@ exports[`Circle component test should render with all existing states 1`] = `
     >
       <p
         class="text text_type_circle text_color_input letter"
+        data-testid="circle-value"
       >
         2
       </p>
@@ -63,6 +65,7 @@ exports[`Circle component test should render with all existing states 1`] = `
     >
       <p
         class="text text_type_circle text_color_input letter"
+        data-testid="circle-value"
       >
         3
       </p>
@@ -91,6 +94,7 @@ exports[`Circle component test should render with index 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p
@@ -111,6 +115,7 @@ exports[`Circle component test should render with isSmall prop 1`] = `
 >
   <p
     class="text text_type_circle text_color_input letter"
+    data-testid="circle-value"
   />
 </div>
 `;
@@ -133,6 +138,7 @@ exports[`Circle component test should render with react element in head 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p
@@ -158,6 +164,7 @@ exports[`Circle component test should render with react element in tail 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p
@@ -187,6 +194,7 @@ exports[`Circle component test should render with text 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     >
       abcd
     </p>
@@ -216,6 +224,7 @@ exports[`Circle component test should render with text in head 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p
@@ -241,6 +250,7 @@ exports[`Circle component test should render with text in tail 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p
@@ -268,6 +278,7 @@ exports[`Circle component test should render without text 1`] = `
   >
     <p
       class="text text_type_circle text_color_input letter"
+      data-testid="circle-value"
     />
   </div>
   <p

@@ -20,7 +20,7 @@ describe('string reverse visualizer work', () => {
     cy.get('button[type=submit] > img').should(`${prefix}exist`);
   };
 
-  const regExpValue = (value: string) => new RegExp(value, 'i');
+  const getRegExp = (value: string) => new RegExp(value, 'i');
 
   it('should reverse string with odd length', () => {
     cy.get('input').type('12345{enter}').should('have.attr', 'disabled');
@@ -36,10 +36,10 @@ describe('string reverse visualizer work', () => {
       .as('elements')
       .each(($el, index) => {
         if (index === 0 || index === 4) {
-          cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Changing));
+          cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
           return;
         }
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Default));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
       });
 
     cy.wait(1000);
@@ -49,14 +49,14 @@ describe('string reverse visualizer work', () => {
     });
     cy.get('@elements').each(($el, index) => {
       if (index === 0 || index === 4) {
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Modified));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Modified));
         return;
       }
       if (index === 1 || index === 3) {
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Changing));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
         return;
       }
-      cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Default));
+      cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
     });
 
     cy.wait(1000);
@@ -66,16 +66,16 @@ describe('string reverse visualizer work', () => {
     });
     cy.get('@elements').each(($el, index) => {
       if (index === 2) {
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Changing));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
         return;
       }
-      cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Modified));
+      cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Modified));
     });
 
     cy.wait(1000);
 
     cy.get('@elements').each($el => {
-      cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Modified));
+      cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Modified));
     });
 
     checkControlsState('enabled');
@@ -95,10 +95,10 @@ describe('string reverse visualizer work', () => {
       .as('elements')
       .each(($el, index) => {
         if (index === 0 || index === 3) {
-          cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Changing));
+          cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
           return;
         }
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Default));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
       });
 
     cy.wait(1000);
@@ -108,11 +108,11 @@ describe('string reverse visualizer work', () => {
     });
     cy.get('@elements').each(($el, index) => {
       if (index === 0 || index === 3) {
-        cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Modified));
+        cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Modified));
         return;
       }
 
-      cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Changing));
+      cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
     });
 
     cy.wait(1000);
@@ -121,7 +121,7 @@ describe('string reverse visualizer work', () => {
       cy.wrap($values.text()).should('equal', 'dcba');
     });
     cy.get('@elements').each($el => {
-      cy.wrap($el[0].className).should('match', regExpValue(ElementStates.Modified));
+      cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Modified));
     });
 
     checkControlsState('enabled');
