@@ -2,8 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 import { Input } from 'components/ui/input';
 import { Button } from 'components/ui/button';
-import styles from './styles.module.css';
 import { TActionTypes } from '../utils';
+import styles from './styles.module.css';
 
 interface IQueueManagerProps {
   value: string;
@@ -46,12 +46,19 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
       disabled={!value || queueLength === queueMaxSize}
     />
     <Button
+      data-testid="remove"
       text="Удалить"
       extraClass="ml-6"
       isLoader={animation === 'delete'}
       disabled={queueLength === 0}
       onClick={onDelete}
     />
-    <Button text="Очистить" extraClass="ml-40" disabled={queueLength === 0} onClick={onClear} />
+    <Button
+      data-testid="clear"
+      text="Очистить"
+      extraClass="ml-40"
+      disabled={queueLength === 0}
+      onClick={onClear}
+    />
   </form>
 );

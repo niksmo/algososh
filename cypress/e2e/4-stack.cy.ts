@@ -20,6 +20,10 @@ describe('stack visualizer work', () => {
       cy.get('@submitBtn').should('not.have.attr', 'disabled');
     });
 
+    it('should limit input value', () => {
+      cy.get('@input').type('12345').should('have.value', '1234');
+    });
+
     it('when stack is empty, delete and clear buttons should be unavailable', () => {
       cy.get('@removeBtn').should('have.attr', 'disabled');
       cy.get('@clearBtn').should('have.attr', 'disabled');
@@ -165,5 +169,3 @@ describe('stack visualizer work', () => {
     });
   });
 });
-
-export {};
