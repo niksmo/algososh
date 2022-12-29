@@ -21,8 +21,10 @@ export const Circle: React.FC<CircleProps> = ({
   extraClass = '',
   isSmall,
 }) => {
+  const wrapperTestId = isSmall ? 'circle-small' : 'circle';
+
   return (
-    <div className={`${styles.content} ${extraClass}`} data-testid="circle">
+    <div className={`${styles.content} ${extraClass}`} data-testid={wrapperTestId}>
       <div
         data-testid="circle-head"
         className={`text text_type_input text_color_input mb-4 ${styles.absolute} ${styles.head} ${

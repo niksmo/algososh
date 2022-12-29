@@ -24,6 +24,8 @@
 - Typescript v4.5.5
 - React v17.0.2
 - React Router v5.2.1
+- Jest
+- Cypress
 
 ## Установка и запуск
 

@@ -12,7 +12,7 @@
 /cypress/downloads
 /cypress/videos
 /cypress/screenshots
-/cypress_exsamples
+/cypress_examples
 /coverage
 
 # production

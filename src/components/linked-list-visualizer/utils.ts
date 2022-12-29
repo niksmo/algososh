@@ -6,7 +6,7 @@ import { getRandomInteger, waitWithDelay } from 'helpers/utils';
 import { DELAY_IN_MS } from 'constants/delays';
 
 export const useLinkedList = () => {
-  const queueClass = useMemo(() => new LinkedList<string>(7, getRandomListNodes(6)), []);
+  const queueClass = useMemo(() => new LinkedList<string>(7, getRandomListNodes(5)), []);
   const queueRef = useRef(queueClass);
   const { current: queue } = queueRef;
 
@@ -14,7 +14,7 @@ export const useLinkedList = () => {
 };
 
 function getRandomListNodes(maxSize: number) {
-  const randNumber = 1 + Math.floor(Math.random() * maxSize);
+  const randNumber = 2 + Math.floor(Math.random() * maxSize);
 
   const dummyHead = new ListNode<string>(String(0));
   let current = dummyHead;

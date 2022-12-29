@@ -62,19 +62,17 @@ describe('stack visualizer work', () => {
           if (index === 0) {
             cy.wrap($element)
               .find('[data-testid=circle-main]')
-              .then($el => {
-                if (index === 0) {
-                  cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
-                } else {
-                  cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-                }
-              });
+              .matchClass(getRegExp(ElementStates.Changing));
+          } else {
+            cy.wrap($element)
+              .find('[data-testid=circle-main]')
+              .matchClass(getRegExp(ElementStates.Default));
           }
-          cy.wrap($element).find('[data-testid=circle-head]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-head]').should('have.value', '');
 
-          cy.wrap($element).find('[data-testid=circle-tail]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-tail]').should('have.value', '');
 
-          cy.wrap($element).find('[data-testid=circle-value]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-value]').should('have.value', '');
         });
 
       cy.wait(1000);
@@ -89,21 +87,17 @@ describe('stack visualizer work', () => {
 
           cy.wrap($element)
             .find('[data-testid=circle-main]')
-            .then($el => {
-              cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-            });
+            .matchClass(getRegExp(ElementStates.Default));
           return;
         }
-        cy.wrap($element).find('[data-testid=circle-head]').invoke('val').should('equal', '');
+        cy.wrap($element).find('[data-testid=circle-head]').should('have.value', '');
 
-        cy.wrap($element).find('[data-testid=circle-tail]').invoke('val').should('equal', '');
+        cy.wrap($element).find('[data-testid=circle-tail]').should('have.value', '');
 
-        cy.wrap($element).find('[data-testid=circle-value]').invoke('val').should('equal', '');
+        cy.wrap($element).find('[data-testid=circle-value]').should('have.value', '');
         cy.wrap($element)
           .find('[data-testid=circle-main]')
-          .then($el => {
-            cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-          });
+          .matchClass(getRegExp(ElementStates.Default));
       });
 
       cy.get('@input').type('def');
@@ -119,26 +113,25 @@ describe('stack visualizer work', () => {
 
           cy.wrap($element)
             .find('[data-testid=circle-main]')
-            .then($el => {
-              cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-            });
+            .matchClass(getRegExp(ElementStates.Default));
           return;
+        } else {
+          cy.wrap($element).find('[data-testid=circle-head]').should('have.value', '');
+
+          cy.wrap($element).find('[data-testid=circle-tail]').should('have.value', '');
+
+          cy.wrap($element).find('[data-testid=circle-value]').should('have.value', '');
         }
-        cy.wrap($element).find('[data-testid=circle-head]').invoke('val').should('equal', '');
 
-        cy.wrap($element).find('[data-testid=circle-tail]').invoke('val').should('equal', '');
-
-        cy.wrap($element).find('[data-testid=circle-value]').invoke('val').should('equal', '');
-
-        cy.wrap($element)
-          .find('[data-testid=circle-main]')
-          .then($el => {
-            if (index === 1) {
-              cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
-            } else {
-              cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-            }
-          });
+        if (index === 1) {
+          cy.wrap($element)
+            .find('[data-testid=circle-main]')
+            .matchClass(getRegExp(ElementStates.Changing));
+        } else {
+          cy.wrap($element)
+            .find('[data-testid=circle-main]')
+            .matchClass(getRegExp(ElementStates.Default));
+        }
       });
 
       cy.wait(1000);
@@ -159,13 +152,11 @@ describe('stack visualizer work', () => {
 
         cy.wrap($element)
           .find('[data-testid=circle-main]')
-          .then($el => {
-            cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-          });
+          .matchClass(getRegExp(ElementStates.Default));
       });
 
       cy.get('@values').then($elements => {
-        const values = Array.from($elements.get()).filter(el => el.textContent !== '');
+        const values = $elements.toArray().filter(el => el.textContent !== '');
         cy.wrap(values.length).should('equal', 2);
       });
     });
@@ -202,15 +193,15 @@ describe('stack visualizer work', () => {
             cy.wrap($element).contains('def');
           }
 
-          cy.wrap($element)
-            .find('[data-testid=circle-main]')
-            .then($el => {
-              if (index === 0) {
-                cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Changing));
-              } else {
-                cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default));
-              }
-            });
+          if (index === 0) {
+            cy.wrap($element)
+              .find('[data-testid=circle-main]')
+              .matchClass(getRegExp(ElementStates.Changing));
+          } else {
+            cy.wrap($element)
+              .find('[data-testid=circle-main]')
+              .matchClass(getRegExp(ElementStates.Default));
+          }
         });
 
       cy.wait(1000);
@@ -219,11 +210,11 @@ describe('stack visualizer work', () => {
 
       cy.get('@queue').each(($element, index) => {
         if (index === 0) {
-          cy.wrap($element).find('[data-testid=circle-head]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-head]').should('have.value', '');
 
-          cy.wrap($element).find('[data-testid=circle-tail]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-tail]').should('have.value', '');
 
-          cy.wrap($element).find('[data-testid=circle-value]').invoke('val').should('equal', '');
+          cy.wrap($element).find('[data-testid=circle-value]').should('have.value', '');
         }
 
         if (index === 1) {
@@ -234,7 +225,7 @@ describe('stack visualizer work', () => {
 
         cy.wrap($element)
           .find('[data-testid=circle-main]')
-          .then($el => cy.wrap($el[0].className).should('match', getRegExp(ElementStates.Default)));
+          .matchClass(getRegExp(ElementStates.Default));
       });
     });
 
@@ -243,7 +234,7 @@ describe('stack visualizer work', () => {
       cy.get('[data-testid=circle-value]')
         .as('values')
         .then($elements => {
-          const isEmpty = Array.from($elements.get()).every(el => el.textContent === '');
+          const isEmpty = $elements.toArray().every(el => el.textContent === '');
           cy.wrap(isEmpty).should('be.true');
         });
     });
