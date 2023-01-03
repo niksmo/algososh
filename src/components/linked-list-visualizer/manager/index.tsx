@@ -47,8 +47,9 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         maxLength={4}
         isLimitText
         extraClass={styles.controls__input}
-        onChange={onValueChange}
         disabled={listLength === maxSize || animation !== null}
+        data-testid="valueInput"
+        onChange={onValueChange}
       />
       <Button
         text="Добавить в head"
@@ -56,6 +57,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'prepend'}
         disabled={value === '' || listLength === maxSize || animation !== null}
+        data-testid="addToHead"
         onClick={onAddInHead}
       />
       <Button
@@ -64,6 +66,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'append'}
         disabled={value === '' || listLength === maxSize || animation !== null}
+        data-testid="addToTail"
         onClick={onAddInTail}
       />
       <Button
@@ -72,6 +75,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteHead'}
         disabled={listLength === 0 || animation !== null}
+        data-testid="removeFromHead"
         onClick={onDeleteFromHead}
       />
       <Button
@@ -80,6 +84,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         extraClass={cn(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteTail'}
         disabled={listLength === 0 || animation !== null}
+        data-testid="removeFromTail"
         onClick={onDeleteFromTail}
       />
     </div>
@@ -93,6 +98,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         max={listLength ? listLength - 1 : 0}
         extraClass={styles.controls__input}
         disabled={animation !== null || listLength === 0}
+        data-testid="indexInput"
         onChange={onIndexChange}
       />
       <Button
@@ -107,6 +113,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
           animation !== null ||
           Number(index) > listLength - 1
         }
+        data-testid="addByIndex"
         onClick={onAddByIndex}
       />
       <Button
@@ -117,6 +124,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         disabled={
           !index || listLength === 0 || animation !== null || Number(index) > listLength - 1
         }
+        data-testid="removeByIndex"
         onClick={onDeleteByIndex}
       />
     </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { DELAY_IN_MS } from 'constants/delays';
 import { ArrayItem } from 'helpers/entities';
 import type { TArrayItem } from 'types';
 import { ElementStates } from 'types/element-states';
@@ -50,9 +49,14 @@ export const reverserReducer: React.Reducer<IReverserState, TReverserActionTypes
   }
 };
 
-export async function* generateReverseAnimation(string: string) {
+export async function* generateReverseAnimation(
+  string: string,
+  latency: number,
+  abortController?: AbortController
+) {
   const array = [];
-  const delay = waitWithDelay(DELAY_IN_MS);
+
+  const delay = waitWithDelay(latency, abortController);
 
   for (let subStr of string) {
     array.push(new ArrayItem(subStr));
@@ -65,7 +69,11 @@ export async function* generateReverseAnimation(string: string) {
     array[pointStart].state = ElementStates.Changing;
     array[pointEnd].state = ElementStates.Changing;
     yield array;
-    await delay();
+    try {
+      await delay();
+    } catch (error) {
+      throw new Error('animation aborted');
+    }
 
     swap(array, pointStart, pointEnd);
     array[pointStart].state = ElementStates.Modified;

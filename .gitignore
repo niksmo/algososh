@@ -9,6 +9,10 @@
 .vscode
 
 # testing
+/cypress/downloads
+/cypress/videos
+/cypress/screenshots
+/cypress_examples
 /coverage
 
 # production

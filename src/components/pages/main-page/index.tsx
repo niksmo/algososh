@@ -17,7 +17,7 @@ export const MainPage: React.FC<MainPageProps> = ({ extraClass = '' }) => {
           им. Фибоначчи
         </p>
       </div>
-      <div className={styles.cards_box}>
+      <div className={styles.cards_box} data-testid="navigation">
         <Link className={styles.link} to="/recursion">
           <div className={`${styles.card} ${styles.string}`} />
         </Link>

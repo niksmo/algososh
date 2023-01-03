@@ -7,6 +7,14 @@ export function getRandomInteger(min: number, max: number) {
   return Math.floor(random);
 }
 
-export function waitWithDelay(delayInSec: number) {
-  return () => new Promise(resolve => setTimeout(resolve, delayInSec));
+export function waitWithDelay(delayInSec: number, abortController?: AbortController) {
+  return () =>
+    new Promise((resolve, reject) => {
+      setTimeout(resolve, delayInSec);
+      abortController?.signal.addEventListener('abort', reject);
+    });
+}
+
+export function withMessage(error: unknown): error is Error {
+  return Boolean((error as Error).message);
 }

@@ -40,17 +40,25 @@ export const StackManager: React.FC<IStackManagerProps> = ({
     <Button
       type="submit"
       text="Добавить"
+      name="add"
       extraClass="ml-6"
       isLoader={action === 'add'}
       disabled={Boolean(action) || !value || stackSize === stackMaxSize}
     />
     <Button
       text="Удалить"
+      data-testid="remove"
       extraClass="ml-6"
       isLoader={action === 'delete'}
       disabled={stackSize === 0}
       onClick={onDelete}
     />
-    <Button text="Очистить" extraClass="ml-40" disabled={stackSize === 0} onClick={onClear} />
+    <Button
+      text="Очистить"
+      data-testid="clear"
+      extraClass="ml-40"
+      disabled={stackSize === 0}
+      onClick={onClear}
+    />
   </form>
 );

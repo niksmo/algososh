@@ -49,28 +49,35 @@ export const fibCalcReducer: React.Reducer<IFibCalcState, TFibCalcActionTypes> =
   }
 };
 
-export async function* generateFibAnimation(num: number) {
+export async function* generateFibAnimation(
+  num: number,
+  latency = SHORT_DELAY_IN_MS,
+  abortController?: AbortController
+) {
   let ans: TArrayItem[] = [];
-  const delay = waitWithDelay(SHORT_DELAY_IN_MS);
+  const delay = waitWithDelay(latency, abortController);
 
   let a = 0;
   let b = 1;
   let c;
-
-  ans.push(new ArrayItem(1));
-  yield ans;
-  await delay();
-
-  for (let i = 0; i < num; i++) {
-    c = a + b;
-
-    ans.push(new ArrayItem(c));
+  try {
+    ans.push(new ArrayItem(1));
     yield ans;
     await delay();
 
-    a = b;
-    b = c;
-  }
+    for (let i = 0; i < num; i++) {
+      c = a + b;
 
-  return ans;
+      ans.push(new ArrayItem(c));
+      yield ans;
+      await delay();
+
+      a = b;
+      b = c;
+    }
+
+    return ans;
+  } catch {
+    throw new Error('animation aborted');
+  }
 }

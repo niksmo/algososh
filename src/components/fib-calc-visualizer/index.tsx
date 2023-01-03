@@ -1,5 +1,7 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import cn from 'classnames';
+import { withMessage } from 'helpers/utils';
+import { SHORT_DELAY_IN_MS } from 'constants/delays';
 import { FibChart } from './chart';
 import { FibManager } from './manager';
 import {
@@ -22,6 +24,13 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassN
     fibCalcInitState
   );
 
+  const abortControllerRef = useRef<null | AbortController>(null);
+
+  const abortAnimation = () => {
+    dispatch(stopAction());
+    abortControllerRef.current?.abort();
+  };
+
   const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const currentValue = evt.currentTarget.value;
 
@@ -33,12 +42,28 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({ extClassN
 
   const handleCalcFibNum = async (evt: React.FormEvent) => {
     evt.preventDefault();
-    const animationGenerator = generateFibAnimation(Number(inputValue));
-    for await (let elements of animationGenerator) {
-      dispatch(animateAction(elements));
+
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
+    const animationGenerator = generateFibAnimation(
+      Number(inputValue),
+      SHORT_DELAY_IN_MS,
+      abortController
+    );
+    try {
+      for await (let elements of animationGenerator) {
+        dispatch(animateAction(elements));
+      }
+      dispatch(stopAction());
+    } catch (error) {
+      if (withMessage(error)) {
+        console.log(error.message);
+      }
     }
-    dispatch(stopAction());
   };
+
+  useEffect(() => () => void abortAnimation(), []);
 
   return (
     <div className={cn(styles.fibVisualizer, extClassName)}>
